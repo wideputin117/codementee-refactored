@@ -1,0 +1,40 @@
+services:
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+
+  user-db:
+    image: mongo
+    ports:
+      - '27017:27017'
+
+  session-db:
+    image: mongo
+    ports:
+      - '27018:27017'
+
+  user-service:
+    build: ./services/user-service
+    depends_on:
+      - user-db
+      - rabbitmq
+    ports:
+      - '3001:3001'
+
+  session-service:
+    build: ./services/session-service
+    depends_on:
+      - session-db
+      - rabbitmq
+    ports:
+      - '3002:3002'
+
+  api-gateway:
+    build: ./api-gateway
+    depends_on:
+      - user-service
+      - session-service
+    ports:
+      - '3000:3000'
