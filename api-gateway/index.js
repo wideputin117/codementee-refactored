@@ -8,7 +8,7 @@ import {
 const app = express();
 
 app.use('/api/users', createProxyMiddleware({
-  target: 'http://user-service:3001', // <-- CHANGED
+  target: 'http://user-service:3001',// to talk with inner services  
   changeOrigin: true,
   pathRewrite: {
     '^/api/users': ''
@@ -16,7 +16,7 @@ app.use('/api/users', createProxyMiddleware({
 }));
 
 app.use('/api/sessions', createProxyMiddleware({
-  target: 'http://session-service:3002', // <-- CHANGED
+  target: 'http://session-service:3002', // to talk with inner services  
   changeOrigin: true,
   pathRewrite: {
     '^/api/sessions': ''
