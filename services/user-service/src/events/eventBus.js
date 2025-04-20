@@ -1,3 +1,4 @@
+import amqp from "amqplib"
 import amqp from 'amqplib';
 
 let channel; // channel holds the instance
@@ -14,11 +15,12 @@ export async function ConnectToRabbit(){
 export async function publishEvent(eventType, payload){
     if(!channel) await ConnectToRabbit();
     channel.publish("codementee",eventType,Buffer.from(JSON.stringify(payload)));
+    // return "event is published"
 }
 
 /** function for cons */
 export async function subscribeEvent(bindingKey, callback) {
-    if (!channel) await connectRabbitMQ();
+    if (!channel) await ConnectToRabbit();
     const q = await channel.assertQueue('', { exclusive: true });
     await channel.bindQueue(q.queue, 'codementee', bindingKey);
     channel.consume(q.queue, (msg) => {

@@ -1,6 +1,4 @@
-import { subscribeEvent } from "../../../shared/events/eventBus";
-
- 
+import { subscribeEvent } from "../events/eventBus.js";
 
 export const startSessionConsumer = async () => {
   await subscribeEvent('session.booked', async (data) => {
