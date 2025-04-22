@@ -1,6 +1,4 @@
 import amqp from "amqplib"
-import amqp from 'amqplib';
-
 let channel; // channel holds the instance
 
 // function to connect to rabbit mq
