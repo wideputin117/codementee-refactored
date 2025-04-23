@@ -11,6 +11,7 @@ import amqp from 'amqplib';
 // }
 
 export const bookSession = async (req, res) => {
+  console.log("the booking data is", req.body);
   const session = await Session.create(req.body);
   await publishEvent('session.booked', session);
   res.status(201).json({session:session});
