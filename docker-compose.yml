@@ -22,6 +22,13 @@ services:
       - rabbitmq
     ports:
       - '3001:3001'
+    healthcheck: 
+      test: ["CMD", "curl", "-f", "http://localhost:3001"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    restart: unless-stopped  
 
   session-service:
     build: ./services/session-service
@@ -30,6 +37,13 @@ services:
       - rabbitmq
     ports:
       - '3002:3002'
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3002"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    restart: unless-stopped
 
   api-gateway:
     build: ./api-gateway
@@ -38,3 +52,4 @@ services:
       - session-service
     ports:
       - '3000:3000'
+ 
